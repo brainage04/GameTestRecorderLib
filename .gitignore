@@ -1,0 +1,7 @@
+.gradle/
+.fabric/
+build/
+run/
+.idea/
+*.iml
+logs/
