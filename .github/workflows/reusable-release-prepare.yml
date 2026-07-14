@@ -9,7 +9,7 @@ on:
         default: '25'
         type: string
     secrets:
-      github_token:
+      release_token:
         description: GitHub token used only when generated release notes are required
         required: true
     outputs:
@@ -87,7 +87,7 @@ jobs:
       - name: resolve release notes
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_TOKEN: ${{ secrets.github_token }}
+          GITHUB_TOKEN: ${{ secrets.release_token }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: ./gradlew resolveModReleaseNotes
 

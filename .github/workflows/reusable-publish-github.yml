@@ -17,7 +17,7 @@ on:
         default: '25'
         type: string
     secrets:
-      github_token:
+      release_token:
         description: GitHub token with contents write permission
         required: true
 
@@ -59,7 +59,7 @@ jobs:
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
-          GITHUB_TOKEN: ${{ secrets.github_token }}
+          GITHUB_TOKEN: ${{ secrets.release_token }}
           MOD_PUBLISHING_RELEASE_JAR: release-artifacts/${{ inputs.artifact_file }}
           RELEASE_BODY: ${{ inputs.release_body }}
           RELEASE_PRERELEASE: ${{ contains(github.ref_name, '-') }}
