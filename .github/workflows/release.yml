@@ -85,4 +85,4 @@ jobs:
           CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-        run: ./gradlew publishToMavenCentral -PcentralPublishingType=automatic
+        run: ./gradlew :publishToMavenCentral -PcentralPublishingType=automatic

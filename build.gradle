@@ -98,6 +98,10 @@ publishing {
 	}
 }
 
+tasks.named("publishToMavenCentral") {
+	dependsOn(":gradle-plugin:publishAllPublicationsToCentralRepository")
+}
+
 
 test {
 	useJUnitPlatform()
