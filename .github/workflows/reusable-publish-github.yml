@@ -16,6 +16,16 @@ on:
         required: false
         default: '25'
         type: string
+      publish_with_gradle:
+        description: Publish through the mod-publishing Gradle task
+        required: false
+        default: true
+        type: boolean
+      release_name:
+        description: Release title used by the bootstrap publisher
+        required: false
+        default: ''
+        type: string
     secrets:
       release_token:
         description: GitHub token with contents write permission
@@ -56,6 +66,7 @@ jobs:
           path: release-artifacts
 
       - name: publish GitHub release
+        if: inputs.publish_with_gradle
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
@@ -65,3 +76,25 @@ jobs:
           RELEASE_PRERELEASE: ${{ contains(github.ref_name, '-') }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: ./gradlew publishGithub -PpublishGithub=true
+      - name: publish bootstrap GitHub release
+        if: ${{ !inputs.publish_with_gradle }}
+        env:
+          ARTIFACT_FILE: release-artifacts/${{ inputs.artifact_file }}
+          GH_TOKEN: ${{ secrets.release_token }}
+          RELEASE_BODY: ${{ inputs.release_body }}
+          RELEASE_NAME: ${{ inputs.release_name }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          TITLE="${RELEASE_NAME:-${RELEASE_TAG}}"
+          printf '%s\n' "${RELEASE_BODY}" > "${RUNNER_TEMP}/release-notes.md"
+          PRERELEASE_ARGUMENT=()
+          if [[ "${RELEASE_TAG}" == *-* ]]; then
+            PRERELEASE_ARGUMENT+=(--prerelease)
+          fi
+          gh release create "${RELEASE_TAG}" \
+            "${ARTIFACT_FILE}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "${TITLE}" \
+            --notes-file "${RUNNER_TEMP}/release-notes.md" \
+            --verify-tag \
+            "${PRERELEASE_ARGUMENT[@]}"

@@ -97,6 +97,7 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: ./gradlew resolveModReleaseNotes
 
+
       - name: resolve bootstrap release notes
         if: ${{ !inputs.resolve_release_notes_with_gradle }}
         env:
