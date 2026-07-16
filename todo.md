@@ -2,10 +2,12 @@
 
 No active feature work is queued. New work must satisfy one of the concrete triggers below.
 
-## Completed 2.2.1 release follow-up
+## Completed 2.3.0 ownership rollout
 
-- [x] Published and tagged the production GameTest correctness changes as `v2.2.1`.
-- [x] Updated Template, FortniteInMinecraft, and TwitchPlaysMinecraft to `2.2.1`, moved Twitch4J to `runtimeLibraryDependencies`, and verified all production GameTests in CI.
+- [x] Published and tagged `v2.3.0`, including the runtime artifact and all six component plugin marker/implementation pairs on Maven Central.
+- [x] Moved canonical project identity, dependency repositories, Java conventions, Loom source layout, GameTest defaults, and runtime-helper wiring into the owning component plugins.
+- [x] Added reusable build and client-GameTest workflows, reduced the template/Fortnite/Twitch callers to project-specific configuration, and removed their duplicated workflow orchestration.
+- [x] Verified the conventions suite, Central-only resolution, all generated template side variants, and build/client/production GameTest jobs for all three consumers.
 
 ## Trigger-gated work
 
