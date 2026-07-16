@@ -2,7 +2,7 @@
 
 The project owns the shared recorder/runtime API plus six independently applicable Gradle plugin components. Consumers apply only the leaf capabilities they need; there is no aggregate compatibility plugin.
 
-## 2.2.0 release follow-up
+## 2.2.0 release state
 
 The signed `2.2.0` runtime, all six plugin markers, and all six dedicated implementation modules are published on Maven Central. A clean consumer with an isolated Gradle user home resolved and applied every component directly from Central.
 
@@ -10,14 +10,7 @@ The build now resolves the released `2.2.0` Central publishing plugin, exposes e
 
 All reusable workflow consumers now reference the released `v2.2.0` tag.
 
-## CI verification
-
-Run the real consumer workflows and confirm:
-
-- Template, FortniteInMinecraft, and TwitchPlaysMinecraft resolve the component markers from Central without a sibling conventions repository.
-- Their production client and server GameTests pass through `reusable-production-gametests.yml`.
-- The reusable release-preparation and per-destination publishing workflows retain independently retryable GitHub, Modrinth, and CurseForge jobs.
-- Ordinary `build` and `check` jobs do not contact publication endpoints.
+The tagged Conventions build and the Template, FortniteInMinecraft, TwitchPlaysMinecraft, and HudRendererLib consumer builds passed in GitHub Actions. The three mod consumers resolved `2.2.0` through Central and passed their client, production-client, and production-server GameTest jobs through the released reusable workflows. Publishing destinations remain separate workflow jobs, and ordinary build paths do not invoke publication tasks.
 
 ## Deferred until a concrete consumer exists
 
