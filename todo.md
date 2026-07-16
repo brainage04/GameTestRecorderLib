@@ -2,10 +2,10 @@
 
 No active feature work is queued. New work must satisfy one of the concrete triggers below.
 
-## 2.2.1 release follow-up
+## Completed 2.2.1 release follow-up
 
-- [ ] Publish and tag the reviewed production GameTest correctness changes as `v2.2.1`.
-- [ ] Update Template, FortniteInMinecraft, and TwitchPlaysMinecraft to `2.2.1`; move Twitch4J from Loom's native client-test library configuration to `runtimeLibraryDependencies`; then verify all production GameTests in CI.
+- [x] Published and tagged the production GameTest correctness changes as `v2.2.1`.
+- [x] Updated Template, FortniteInMinecraft, and TwitchPlaysMinecraft to `2.2.1`, moved Twitch4J to `runtimeLibraryDependencies`, and verified all production GameTests in CI.
 
 ## Trigger-gated work
 
