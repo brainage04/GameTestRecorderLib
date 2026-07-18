@@ -4,6 +4,7 @@ import net.fabricmc.loom.task.prod.ClientProductionRunTask;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.tasks.Classpath;
 import org.gradle.work.DisableCachingByDefault;
+import org.gradle.process.ExecSpec;
 
 import javax.inject.Inject;
 
@@ -16,5 +17,11 @@ public abstract class ClientGameTestProductionRunTask extends ClientProductionRu
     @Inject
     public ClientGameTestProductionRunTask() {
         getClasspath().from(getRuntimeLibraries());
+    }
+
+    @Override
+    protected void configureCommand(ExecSpec exec) {
+        super.configureCommand(exec);
+        exec.environment("ALSOFT_DRIVERS", "null");
     }
 }

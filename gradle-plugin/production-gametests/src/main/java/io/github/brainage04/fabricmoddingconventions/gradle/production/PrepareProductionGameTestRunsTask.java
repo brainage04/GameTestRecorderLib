@@ -18,21 +18,37 @@ public abstract class PrepareProductionGameTestRunsTask extends DefaultTask {
     @OutputFile
     public abstract RegularFileProperty getClientEulaFile();
 
+
+    @OutputFile
+    public abstract RegularFileProperty getClientOptionsFile();
     @OutputFile
     public abstract RegularFileProperty getServerEulaFile();
 
     @TaskAction
     public void prepare() {
         writeEula(getClientEulaFile().get().getAsFile().toPath());
+        writeClientOptions(getClientOptionsFile().get().getAsFile().toPath());
         writeEula(getServerEulaFile().get().getAsFile().toPath());
     }
 
     private static void writeEula(Path path) {
+        write(path, "eula=true\n", "production GameTest EULA");
+    }
+
+    private static void writeClientOptions(Path path) {
+        write(
+                path,
+                "soundCategory_master:0.0\nsoundCategory_music:0.0\n",
+                "silent production client GameTest options"
+        );
+    }
+
+    private static void write(Path path, String contents, String description) {
         try {
             Files.createDirectories(path.getParent());
-            Files.writeString(path, "eula=true\n", StandardCharsets.UTF_8);
+            Files.writeString(path, contents, StandardCharsets.UTF_8);
         } catch (IOException exception) {
-            throw new UncheckedIOException("Failed to write production GameTest EULA: " + path, exception);
+            throw new UncheckedIOException("Failed to write " + description + ": " + path, exception);
         }
     }
 }

@@ -111,7 +111,12 @@ public final class ClientGameTestRecorderPlugin implements Plugin<Project> {
                 "-D" + FabricModConventionsPlugin.CLIENT_GAMETEST_ENABLED_PROPERTY + "=true"
         ));
 
-        for (String name : List.of("ALSOFT_CONF", "ALSOFT_DRIVERS", "PULSE_SINK")) {
+        String openAlDrivers = project.getProviders()
+                .environmentVariable("ALSOFT_DRIVERS")
+                .filter(value -> !value.isBlank())
+                .getOrElse("null");
+        javaExec.environment("ALSOFT_DRIVERS", openAlDrivers);
+        for (String name : List.of("ALSOFT_CONF", "PULSE_SINK")) {
             String value = project.getProviders().environmentVariable(name).getOrNull();
             if (value != null && !value.isBlank()) {
                 javaExec.environment(name, value);
