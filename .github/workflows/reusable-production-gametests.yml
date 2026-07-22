@@ -53,13 +53,13 @@ jobs:
       - name: prepare required local Baritone fork
         if: inputs.prepare_baritone
         run: |
-          MINECRAFT_VERSION="$(grep '^minecraft_version=' gradle.properties | cut -d= -f2)"
+          MINECRAFT_VERSION="$(sed -n 's/^minecraft_version=//p' gradle.properties)"
           git clone --depth 1 --branch "minecraft-${MINECRAFT_VERSION}" https://github.com/brainage04/baritone.git ../baritone
           chmod +x ../baritone/gradlew
           ../baritone/gradlew -p ../baritone \
             --no-daemon \
             -Pmaven_group=io.github.brainage04 \
-            :fabric:publishMavenFabricPublicationToLocalBaritoneRepository
+            publishAllPublicationsToLocalBaritoneRepository
 
       - name: run production GameTests
         env:

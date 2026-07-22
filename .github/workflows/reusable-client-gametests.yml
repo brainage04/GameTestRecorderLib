@@ -91,7 +91,7 @@ jobs:
           ../baritone/gradlew -p ../baritone \
             --no-daemon \
             -Pmaven_group=io.github.brainage04 \
-            :fabric:publishMavenFabricPublicationToLocalBaritoneRepository
+            publishAllPublicationsToLocalBaritoneRepository
 
       - name: make gradle wrapper executable
         if: steps.client-test-support.outputs.present == 'true'

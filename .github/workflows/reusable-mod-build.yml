@@ -86,7 +86,7 @@ jobs:
           ../baritone/gradlew -p ../baritone \
             --no-daemon \
             -Pmaven_group=io.github.brainage04 \
-            :fabric:publishMavenFabricPublicationToLocalBaritoneRepository
+            publishAllPublicationsToLocalBaritoneRepository
 
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew

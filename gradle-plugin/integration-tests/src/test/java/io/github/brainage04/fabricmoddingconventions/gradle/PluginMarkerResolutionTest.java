@@ -40,9 +40,9 @@ class PluginMarkerResolutionTest {
                 mod_version=1.0.0
                 maven_group=io.github.brainage04.fixture
                 archives_base_name=publishedmarkerfixture
-                minecraft_version=26.1.2
-                loader_version=0.19.2
-                fabric_api_version=0.146.1+26.1.2
+                minecraft_version=26.2
+                loader_version=0.19.3
+                fabric_api_version=0.155.0+26.2
                 fabricmoddingconventions_version=%s
                 java_version=25
                 """.formatted(VERSION));

@@ -74,4 +74,4 @@ The active roadmap is to stabilize TwitchPlaysMinecraft on Fabric, then deliver 
 - Do not add GitHub Packages or GitHub release/Ivy repositories as dependency fallbacks.
 - Keep repository-specific dependencies in their consumer projects.
 - Keep the owned Baritone fork required-local until upstream publishes a usable Fabric artifact or redistribution is explicitly approved.
-- Keep TwitchPlaysMinecraft private and prohibit public source or artifact distribution until the user explicitly approves a public release.
+- TwitchPlaysMinecraft is public by explicit owner approval; publish both loader artifacts together and keep repository credentials in GitHub Actions secrets.

@@ -52,16 +52,20 @@ public final class ClientGameTestRecorderPlugin implements Plugin<Project> {
         project.getTasks().register("recordClientGameTest", RecordClientGameTestTask.class, task -> {
             task.setGroup("verification");
             task.setDescription("Runs the Fabric client GameTest task under a recorded Xvfb/PipeWire/ffmpeg session.");
-            task.getProjectDirectory().convention(project.getLayout().getProjectDirectory());
+            task.getProjectDirectory().convention(project.getRootProject().getLayout().getProjectDirectory());
             task.getRunDirectory().convention(extension.getRunDir());
             task.getRecordingAudioDeviceProjectProperty().convention(extension.getRecordingAudioDeviceProperty());
-            task.getRunTaskName().convention("runClientGameTest");
+            task.getRunTaskName().convention(clientGameTestTaskPath(project.getPath()));
             task.getOutputs().upToDateWhen(_ -> false);
         });
 
         project.afterEvaluate(_ -> project.getTasks()
                 .matching(task -> task.getName().equals("runClientGameTest"))
                 .configureEach(task -> configureRunClientGameTest(project, extension, prepareTask, task)));
+    }
+
+    static String clientGameTestTaskPath(String projectPath) {
+        return ":".equals(projectPath) ? "runClientGameTest" : projectPath + ":runClientGameTest";
     }
 
     private static void addRuntimeHelperDependencies(Project project) {
