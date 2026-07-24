@@ -81,8 +81,9 @@ public final class ModPublishingPlugin implements Plugin<Project> {
                 .orElse(providers.provider(() -> project.getVersion().toString()));
         Provider<org.gradle.api.file.RegularFile> explicitReleaseJar = project.getLayout().file(
                 providers.gradleProperty("modPublishingReleaseJar")
-                        .orElse(providers.environmentVariable("MOD_PUBLISHING_RELEASE_JAR"))
                         .map(project::file)
+                        .orElse(providers.environmentVariable("MOD_PUBLISHING_RELEASE_JAR")
+                                .map(project.getRootProject()::file))
         );
         Provider<String> modName = providers.gradleProperty("mod_name")
                 .orElse(providers.provider(project::getName));

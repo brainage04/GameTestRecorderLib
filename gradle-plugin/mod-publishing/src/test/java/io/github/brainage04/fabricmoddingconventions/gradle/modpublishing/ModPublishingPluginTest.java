@@ -558,6 +558,38 @@ class ModPublishingPluginTest {
         }
     }
 
+    @Test
+    void resolvesWorkflowReleaseJarFromMultiprojectRoot() throws IOException {
+        Files.writeString(projectDirectory.resolve("settings.gradle"), """
+                rootProject.name = 'publisher-fixture'
+                include 'fabric'
+                """);
+        Path releaseJar = projectDirectory.resolve("release-artifacts/fabric.jar");
+        Files.createDirectories(releaseJar.getParent());
+        Files.writeString(releaseJar, "artifact");
+        Path fabricDirectory = projectDirectory.resolve("fabric");
+        Files.createDirectories(fabricDirectory);
+        Files.writeString(fabricDirectory.resolve("build.gradle"), """
+                plugins {
+                    id 'java'
+                    id '%s'
+                }
+
+                tasks.register('printReleaseJar') {
+                    doLast {
+                        println('RELEASE_JAR=' + modPublishing.releaseJar.get().asFile.canonicalPath)
+                    }
+                }
+                """.formatted(PLUGIN_ID));
+
+        BuildResult result = runGradleWithEnvironment(
+                Map.of("MOD_PUBLISHING_RELEASE_JAR", "release-artifacts/fabric.jar"),
+                ":fabric:printReleaseJar"
+        );
+
+        assertTrue(result.getOutput().contains("RELEASE_JAR=" + releaseJar.toFile().getCanonicalPath()));
+    }
+
     private String modrinthSyncConfiguration(String apiEndpoint) {
         return """
                 github.repository = 'brainage04/publisher-fixture'
